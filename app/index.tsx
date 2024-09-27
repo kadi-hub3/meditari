@@ -21,7 +21,7 @@ const App = () => {
               <Text className='text-center text-white font-bold text-4xl'>
                 Spiritually Meditari
               </Text>
-              <Text className='flex-1 text-white'>
+              <Text className='text-center  text-white text-regular'>
                 Connect to your highest self for permanent success
               </Text>
             </View>
