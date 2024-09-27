@@ -5,6 +5,7 @@ import {LinearGradient} from 'expo-linear-gradient'
 import {StatusBar} from 'expo-status-bar'
 
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Button from '@/components/CustomButton'
 const App = () => {
   return (
     <View className='flex-1'>
@@ -15,13 +16,20 @@ const App = () => {
         <LinearGradient 
           className='flex-1'
           colors={['rgba(0,0,0,0.4)', 'rgba(0,0,0,0.8)']}>
-          <SafeAreaView className='flex-1 px-1 justify-between'>
-            <Text className='text-center text-white font-bold text-4xl'>
-              Spiritually Meditari
-            </Text>
-            <Text className='flex-1 text-white'>
-              Connect to your highest self for permanent success
-            </Text>
+          <SafeAreaView className='flex-1 mx-5 my-10 justify-between'>
+            <View>
+              <Text className='text-center text-white font-bold text-4xl'>
+                Spiritually Meditari
+              </Text>
+              <Text className='flex-1 text-white'>
+                Connect to your highest self for permanent success
+              </Text>
+            </View>
+            <View>
+              <Button onPress={()=> console.log('tap')} title='Get Started' />
+            </View>
+
+
           </SafeAreaView>
           <StatusBar style='light' />
 
