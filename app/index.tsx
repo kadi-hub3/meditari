@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router'
 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Button from '@/components/CustomButton'
+import AppGradient from '@/components/AppGradient'
 const App = () => {
   const router = useRouter()
   return (
@@ -15,10 +16,9 @@ const App = () => {
       source={beachImage}
       resizeMode='cover'
       className='flex-1' >
-        <LinearGradient 
-          className='flex-1'
+        <AppGradient
           colors={['rgba(0,0,0,0.4)', 'rgba(0,0,0,0.8)']}>
-          <SafeAreaView className='flex-1 mx-5 my-10 justify-between'>
+          <SafeAreaView className='flex-1 px-1 justify-between'>
             <View>
               <Text className='text-center text-white font-bold text-4xl'>
                 Spiritually Meditari
@@ -35,7 +35,7 @@ const App = () => {
           </SafeAreaView>
           <StatusBar style='light' />
 
-        </LinearGradient>
+        </AppGradient>
 
       </ImageBackground>
     </View>
