@@ -4,6 +4,7 @@ import AppGradient from '@/components/AppGradient'
 import { MEDITATION_DATA } from '@/constants/meditation-data'
 import meditationImages from '@/constants/meditation-images'
 import { StatusBar } from 'expo-status-bar'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const NatureMeditate = () => {
   return (
@@ -14,7 +15,7 @@ const NatureMeditate = () => {
                     Welcome Kadi
                 </Text>
                 <Text className='text-indigo-100 mb-6  text-xl font-medium'>
-                    Dtart your meditation practice today
+                    Start your meditation practice today
                 </Text>
             </View>
             <View>
@@ -33,9 +34,12 @@ const NatureMeditate = () => {
                                 resizeMode='cover'
                                 className='flex-1 justify-center rounded-lg'
                             >
-                                <Text className='text-gray-100 text-3xl font-bold text-center'>
-                                    {item.title}    
-                                </Text>    
+                                <LinearGradient colors={['transparent','rgba(0,0,0,0.8)']} className='flex-1 justify-center items-center'>
+                                    <Text className='text-gray-100 text-3xl font-bold text-center'>
+                                        {item.title}    
+                                    </Text>   
+                                </LinearGradient>
+
                             </ImageBackground>  
                         </Pressable>
 
