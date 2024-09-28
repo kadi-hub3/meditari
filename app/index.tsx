@@ -3,10 +3,12 @@ import React from 'react'
 import beachImage from '@/assets/meditation-images/beach.webp'
 import {LinearGradient} from 'expo-linear-gradient'
 import {StatusBar} from 'expo-status-bar'
+import { useRouter } from 'expo-router'
 
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Button from '@/components/CustomButton'
 const App = () => {
+  const router = useRouter()
   return (
     <View className='flex-1'>
       <ImageBackground 
@@ -26,7 +28,7 @@ const App = () => {
               </Text>
             </View>
             <View>
-              <Button onPress={()=> console.log('tap')} title='Get Started' />
+              <Button onPress={()=> router.push("/nature-meditate")} title='Get Started' />
             </View>
 
 
