@@ -29,13 +29,9 @@ const App = () => {
             <View>
               <Button onPress={()=> router.push("/nature-meditate")} title='Get Started' />
             </View>
-
-
           </SafeAreaView>
           <StatusBar style='light' />
-
         </AppGradient>
-
       </ImageBackground>
     </View>
   )
