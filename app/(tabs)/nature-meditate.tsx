@@ -27,7 +27,7 @@ const NatureMeditate = () => {
                     keyExtractor={(item)=> item.id.toString()}
                     renderItem={({item})=> (
                         <Pressable
-                            onPress={()=> router.push('/meditate')}
+                            onPress={()=> router.push(`/meditate/${item.id}`)}
                             className='h-52 my-5 rounded-md overflow-hidden'
                         >
                             <ImageBackground  
