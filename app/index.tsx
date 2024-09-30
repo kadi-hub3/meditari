@@ -1,7 +1,6 @@
 import { View, Text, ImageBackground } from 'react-native'
 import React from 'react'
 import beachImage from '@/assets/meditation-images/beach.webp'
-import {LinearGradient} from 'expo-linear-gradient'
 import {StatusBar} from 'expo-status-bar'
 import { useRouter } from 'expo-router'
 
