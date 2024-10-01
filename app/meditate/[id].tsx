@@ -4,6 +4,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import meditationImages from '@/constants/meditation-images';
 import AppGradient from '@/components/AppGradient';
 import { AntDesign } from "@expo/vector-icons";
+import Button from '@/components/CustomButton';
 
 const Meditate = () => {
   const { id } = useLocalSearchParams();
@@ -31,6 +32,10 @@ const Meditate = () => {
                   00:00
                 </Text>
               </View> 
+            </View>
+            <View className='mb-5'>
+              <Button title='Adjust Duration' onPress={()=>console.log('tap')} />
+              <Button title={isMeditating? 'Stop' : 'Start Meditation'} onPress={()=>console.log('tap')} />
             </View>
         </AppGradient>
       </ImageBackground>
