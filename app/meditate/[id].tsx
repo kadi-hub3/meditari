@@ -74,7 +74,7 @@ const Meditate = () => {
 
   const handleAdjustDuration = () => {
     if (isMeditating) toggleMeditationStatus()
-    router.push('/nature-meditate')
+    router.push('/(modal)/adjustDurationModal')
   }
 
   //Format the time left to ensure two digits display

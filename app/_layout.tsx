@@ -20,6 +20,7 @@ export default function RoootLayout () {
             <Stack.Screen name='(tabs)' options={{headerShown: false}}/>
             <Stack.Screen name='index' options={{headerShown: false}}/>
             <Stack.Screen name='meditate/[id]' options={{headerShown: false}}/>
+            <Stack.Screen name='(modal)/adjustDurationModal' options={{headerShown: false, presentation: 'modal'}}/>
         </Stack>
     )
 }
