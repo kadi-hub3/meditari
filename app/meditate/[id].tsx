@@ -23,6 +23,7 @@ const Meditate = () => {
 
     if (secondsRemaining === 0) {
       setMeditating(false)
+      pauseAudio()
       return;
     }
 
@@ -46,10 +47,19 @@ const Meditate = () => {
   }, [audioSound]);
 
   const toggleMeditationStatus = async () => {
-    if (secondsRemaining === 0) setDuration(10)
-      setMeditating(!isMeditating)
-      await togglePlayPause()
-  }
+    if (secondsRemaining === 0) {
+      setDuration(10);
+      setMeditating(false);
+      setPlayingAudio(false);
+    } else {
+      setMeditating(!isMeditating);
+      if (isMeditating) {
+        await pauseAudio(); // Ensure audio pauses if meditation stops
+      } else {
+        await togglePlayPause(); // Play audio when meditation starts
+      }
+    }
+  };
 
   const initializeSound = async () => {
     const audioFileName = MEDITATION_DATA[Number(id)-1].audio
@@ -76,6 +86,15 @@ const Meditate = () => {
     if (isMeditating) toggleMeditationStatus()
     router.push('/(modal)/adjustDurationModal')
   }
+
+  const pauseAudio = async () => {
+    if (audioSound) {
+      if (isPlayingAudio) {
+        await audioSound.pauseAsync();
+        setPlayingAudio(false);
+      }
+    }
+  };
 
   //Format the time left to ensure two digits display
   const formattedTimeMinutes = String(Math.floor(secondsRemaining/60)).padStart(2,'0')
