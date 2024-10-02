@@ -1,5 +1,5 @@
 import { View, Text, ImageBackground, Pressable } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { router, useLocalSearchParams } from 'expo-router';
 import meditationImages from '@/constants/meditation-images';
 import AppGradient from '@/components/AppGradient';
@@ -7,12 +7,13 @@ import { AntDesign } from "@expo/vector-icons";
 import Button from '@/components/CustomButton';
 import {Audio} from 'expo-av'
 import { MEDITATION_DATA, AUDIO_FILES } from '@/constants/meditation-data';
+import {TimerContext} from '@/context/TimerContext';
 
 
 const Meditate = () => {
   const { id } = useLocalSearchParams();
-
-  const [secondsRemaining, setSecondsRemaining] = useState(10)
+  const { duration: secondsRemaining, setDuration } =
+  useContext(TimerContext);
   const [isMeditating, setMeditating] = useState(false);
   const [audioSound, setSound] = useState<Audio.Sound>();
   const [isPlayingAudio, setPlayingAudio] = useState(false);
@@ -20,14 +21,14 @@ const Meditate = () => {
   useEffect(()=> {
     let timerId: NodeJS.Timeout
 
-    if (secondsRemaining === 10) {
+    if (secondsRemaining === 0) {
       setMeditating(false)
       return;
     }
 
     if(isMeditating) {
       timerId = setTimeout(()=> {
-        setSecondsRemaining(secondsRemaining-1)
+        setDuration(secondsRemaining-1)
       }, 1000)
     }
 
@@ -37,9 +38,17 @@ const Meditate = () => {
 
   }, [secondsRemaining, isMeditating])
 
+  useEffect(() => {
+      return () => {
+          setDuration(10);
+          audioSound?.unloadAsync();
+      };
+  }, [audioSound]);
+
   const toggleMeditationStatus = async () => {
-    if (secondsRemaining === 0) setSecondsRemaining(10)
+    if (secondsRemaining === 0) setDuration(10)
       setMeditating(!isMeditating)
+      await togglePlayPause()
   }
 
   const initializeSound = async () => {
@@ -60,8 +69,14 @@ const Meditate = () => {
     } else {
         await sound?.pauseAsync();
         setPlayingAudio(false);
+    }
   }
+
+  const handleAdjustDuration = () => {
+    if (isMeditating) toggleMeditationStatus()
+    router.push('/nature-meditate')
   }
+
   //Format the time left to ensure two digits display
   const formattedTimeMinutes = String(Math.floor(secondsRemaining/60)).padStart(2,'0')
   const formattedTimeSeconds = String((secondsRemaining%60)).padStart(2,'0')
@@ -87,8 +102,8 @@ const Meditate = () => {
               </View> 
             </View>
             <View className='mb-5'>
-              <Button title='Adjust Duration' onPress={toggleMeditationStatus} />
-              <Button title={isMeditating? 'Stop' : 'Start Meditation'} onPress={()=>console.log('tap')} />
+              <Button title='Adjust Duration' onPress={handleAdjustDuration} />
+              <Button title={isMeditating? 'Stop' : 'Start Meditation'} onPress={toggleMeditationStatus} />
             </View>
         </AppGradient>
       </ImageBackground>
