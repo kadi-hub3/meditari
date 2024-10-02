@@ -6,6 +6,9 @@ import AppGradient from '@/components/AppGradient';
 import { AntDesign } from "@expo/vector-icons";
 import Button from '@/components/CustomButton';
 import {Audio} from 'expo-av'
+import { MEDITATION_DATA, AUDIO_FILES } from '@/constants/meditation-data';
+
+
 const Meditate = () => {
   const { id } = useLocalSearchParams();
 
@@ -34,16 +37,31 @@ const Meditate = () => {
 
   }, [secondsRemaining, isMeditating])
 
-  const toggleMeditationStatus = async() => {
-    if (secondsRemaining ===10) setSecondsRemaining(10)
+  const toggleMeditationStatus = async () => {
+    if (secondsRemaining === 0) setSecondsRemaining(10)
       setMeditating(!isMeditating)
   }
 
   const initializeSound = async () => {
-    
+    const audioFileName = MEDITATION_DATA[Number(id)-1].audio
+    const {sound }= await Audio.Sound.createAsync(AUDIO_FILES[audioFileName])
+    setSound(sound)
+    return sound
+
   }
 
+  const togglePlayPause = async () => {
+    const sound = audioSound ? audioSound : await initializeSound()
+    const status = await sound?.getStatusAsync()
 
+    if (status?.isLoaded && !isPlayingAudio) {
+        await sound?.playAsync();
+        setPlayingAudio(true);
+    } else {
+        await sound?.pauseAsync();
+        setPlayingAudio(false);
+  }
+  }
   //Format the time left to ensure two digits display
   const formattedTimeMinutes = String(Math.floor(secondsRemaining/60)).padStart(2,'0')
   const formattedTimeSeconds = String((secondsRemaining%60)).padStart(2,'0')
@@ -69,7 +87,7 @@ const Meditate = () => {
               </View> 
             </View>
             <View className='mb-5'>
-              <Button title='Adjust Duration' onPress={()=>console.log('tap')} />
+              <Button title='Adjust Duration' onPress={toggleMeditationStatus} />
               <Button title={isMeditating? 'Stop' : 'Start Meditation'} onPress={()=>console.log('tap')} />
             </View>
         </AppGradient>
