@@ -5,13 +5,13 @@ import meditationImages from '@/constants/meditation-images';
 import AppGradient from '@/components/AppGradient';
 import { AntDesign } from "@expo/vector-icons";
 import Button from '@/components/CustomButton';
-
+import {Audio} from 'expo-av'
 const Meditate = () => {
   const { id } = useLocalSearchParams();
 
   const [secondsRemaining, setSecondsRemaining] = useState(10)
   const [isMeditating, setMeditating] = useState(false);
-  // const [audioSound, setSound] = useState<Audio.Sound>();
+  const [audioSound, setSound] = useState<Audio.Sound>();
   const [isPlayingAudio, setPlayingAudio] = useState(false);
 
   useEffect(()=> {
@@ -33,6 +33,20 @@ const Meditate = () => {
     }
 
   }, [secondsRemaining, isMeditating])
+
+  const toggleMeditationStatus = async() => {
+    if (secondsRemaining ===10) setSecondsRemaining(10)
+      setMeditating(!isMeditating)
+  }
+
+  const initializeSound = async () => {
+    
+  }
+
+
+  //Format the time left to ensure two digits display
+  const formattedTimeMinutes = String(Math.floor(secondsRemaining/60)).padStart(2,'0')
+  const formattedTimeSeconds = String((secondsRemaining%60)).padStart(2,'0')
   return (
     <View className='flex-1'>
       <ImageBackground 
@@ -50,7 +64,7 @@ const Meditate = () => {
             <View className='flex-1 justify-center'>
               <View className='mx-auto bg-neutral-200 rounded-full w-44 h-44 justify-center items-center'>
                 <Text className='text-4xl text-green-800 font-rmono'>
-                  00:{secondsRemaining}
+                  {formattedTimeMinutes}:{formattedTimeSeconds}
                 </Text>
               </View> 
             </View>
